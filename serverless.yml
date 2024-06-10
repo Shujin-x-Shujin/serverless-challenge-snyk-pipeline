@@ -1,0 +1,66 @@
+service: loyalty-cards-test
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  region: ap-south-1
+  runtime: python3.9
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action: "dynamodb:*"
+          Resource: "*"
+
+package:
+  patterns:
+    - env/**
+    - node_modules/**
+
+functions:
+  index:
+    handler: handler.index
+    events:
+      - http:
+          path: /loyalty-cards
+          method: get
+
+  get_all_loyalty_cards:
+    handler: handler.get_all_loyalty_cards
+    events:
+      - http:
+          path: /loyalty-cards/all
+          method: get
+
+  get_loyalty_card_by_key:
+    handler: handler.get_loyalty_card_by_key
+    events:
+      - http:
+          path: /loyalty-cards/id
+          method: get
+  
+  create_loyalty_card:
+    handler: handler.create_loyalty_card
+    events:
+      - http:
+          path: /loyalty-cards/create
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    MyDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: loyalty-cards
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+
+plugins:
+  - serverless-offline
