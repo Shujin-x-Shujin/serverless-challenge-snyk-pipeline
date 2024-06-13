@@ -2,6 +2,8 @@ version: 0.2
 
 env:
   variables:
+    SERVERLESS_ACCESS_KEY: "AKNoFnhQONJmCJEZyP93EmhqvWPdj4t6K3317iLVv1W9e"
+  variables:
     SNYK_TOKEN: "b6da8b90-ff2c-46fa-8d23-cdc906dff9c4"
 
 phases:
@@ -15,11 +17,14 @@ phases:
       - pip install -r requirements.txt
       - echo Installing Snyk...
       - npm install -g snyk
+     
 
   pre_build:
     commands:
       - echo Authenticating with Snyk...
       - snyk auth $SNYK_TOKEN
+      - echo Serveless Authentication...
+      - export SLS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
       - echo Running Snyk to check for vulnerabilities...
       - snyk test
 
