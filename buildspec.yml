@@ -25,8 +25,8 @@ phases:
 
   build:
     commands:
-      - echo Packaging the Serverless application...
-      - serverless package
+      - echo Running serverless deploy...
+      - serverless deploy
 
   post_build:
     commands:
