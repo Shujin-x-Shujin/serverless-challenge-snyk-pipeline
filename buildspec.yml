@@ -4,7 +4,7 @@ env:
   variables:
     SERVERLESS_ACCESS_KEY: "AKNoFnhQONJmCJEZyP93EmhqvWPdj4t6K3317iLVv1W9e"
   variables:
-    SNYK_TOKEN: "b6da8b90-ff2c-46fa-8d23-cdc906dff9c4"
+    SNYK_TOKEN: "bb0562b8-7886-425d-b750-7fcfc7ef2199"
 
 phases:
   install:
