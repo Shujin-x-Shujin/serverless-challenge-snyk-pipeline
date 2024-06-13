@@ -1,0 +1,38 @@
+version: 0.2
+
+env:
+  variables:
+    SNYK_TOKEN: "b6da8b90-ff2c-46fa-8d23-cdc906dff9c4"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo Installing Serverless Framework...
+      - npm install -g serverless
+      - echo Installing dependencies...
+      - pip install -r requirements.txt
+      - echo Installing Snyk...
+      - npm install -g snyk
+
+  pre_build:
+    commands:
+      - echo Authenticating with Snyk...
+      - snyk auth $SNYK_TOKEN
+      - echo Running Snyk to check for vulnerabilities...
+      - snyk test
+
+  build:
+    commands:
+      - echo Packaging the Serverless application...
+      - serverless package
+
+  post_build:
+    commands:
+      - echo Deployment is triggered separately.
+
+artifacts:
+  files:
+    - .serverless/**
+  discard-paths: yes
