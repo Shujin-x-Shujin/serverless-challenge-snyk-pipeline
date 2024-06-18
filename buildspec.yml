@@ -1,38 +1,34 @@
 version: 0.2
 
-stages:
-  - name: Install
-    install:
-      runtime-versions:
-        python: 3.11
-      commands:
-        - echo Installing Serverless Framework...
-        - npm install -g serverless
-        - echo Installing dependencies...
-        - pip install -r requirements.txt
-        - echo Installing Snyk...
-        - npm install -g snyk
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo Installing Serverless Framework...
+      - npm install -g serverless
+      - echo Installing dependencies...
+      - pip install -r requirements.txt
+      - echo Installing Snyk...
+      - npm install -g snyk
+     
+  pre_build:
+    commands:
+      - echo Authenticating with Snyk...
+      - snyk auth $SNYK_TOKEN
+      - echo Serverless Authentication...
+      - export SLS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
+      - echo Running Snyk to check for vulnerabilities...
+      - snyk test || { echo "Vulnerabilities found, failing the build"; exit 1; }
 
-  - name: Pre-Build
-    pre_build:
-      commands:
-        - echo Authenticating with Snyk...
-        - snyk auth $SNYK_TOKEN
-        - echo Serverless Authentication...
-        - export SLS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
-        - echo Running Snyk to check for vulnerabilities...
-        - snyk test || { echo "Vulnerabilities found, failing the build"; exit 1; }
+  build:
+    commands:
+      - echo Running serverless deploy...
+      - serverless deploy
 
-  - name: Build
-    build:
-      commands:
-        - echo Running serverless deploy...
-        - serverless deploy
-
-  - name: Post-Build
-    post_build:
-      commands:
-        - echo Deployment is triggered separately.
+  post_build:
+    commands:
+      - echo Deployment is triggered separately.
 
 artifacts:
   files:
