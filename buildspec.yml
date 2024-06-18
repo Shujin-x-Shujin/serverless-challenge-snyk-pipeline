@@ -1,10 +1,6 @@
 version: 0.2
 
 env:
-  variables:
-    SERVERLESS_ACCESS_KEY: "AKNoFnhQONJmCJEZyP93EmhqvWPdj4t6K3317iLVv1W9e"
-  variables:
-    SNYK_TOKEN: "bb0562b8-7886-425d-b750-7fcfc7ef2199"
 
 stages:
   - name: Install
