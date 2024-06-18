@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo Installing Serverless Framework...
+      - npm install -g serverless
+      - echo Installing dependencies...
+      - pip install -r requirements.txt
+
+  build:
+    commands:
+      - echo Running serverless deploy...
+      - serverless deploy
+
+  post_build:
+    commands:
+      - echo Deployment is triggered separately.
+
+artifacts:
+  files:
+    - .serverless/**
+  discard-paths: yes
