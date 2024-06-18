@@ -14,10 +14,7 @@ phases:
      
   pre_build:
     commands:
-      - echo Authenticating with Snyk...
-      - snyk auth $SNYK_TOKEN
       - echo Serverless Authentication...
-      - export SLS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
       - echo Running Snyk to check for vulnerabilities...
       - snyk test || { echo "Vulnerabilities found, failing the build"; exit 1; }
 
