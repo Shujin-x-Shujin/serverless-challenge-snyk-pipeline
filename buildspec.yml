@@ -12,6 +12,8 @@ phases:
 
   build:
     commands:
+      - echo Serverless login.
+      - serverless login
       - echo Running serverless deploy...
       - serverless deploy
 
