@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    SERVERLESS_ACCESS_KEY: "AKrmpljZSj9PwRVkHSNfz9gS27kLiNocBD0SbzxhaesS5"
+
 phases:
   install:
     runtime-versions:
@@ -13,6 +17,7 @@ phases:
   build:
     commands:
       - echo Serverless login.
+      - export SLS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
       - serverless login
       - echo Running serverless deploy...
       - serverless deploy
