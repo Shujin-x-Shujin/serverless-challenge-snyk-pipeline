@@ -10,7 +10,7 @@ phases:
       python: 3.11
     commands:
       - echo Installing Serverless Framework...
-      - npm install -g serverless
+      - npm install -g serverless@3
       - echo Installing dependencies...
       - pip install -r requirements.txt
 
