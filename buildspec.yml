@@ -26,7 +26,7 @@ phases:
       - echo Serveless Authentication...
       - export SLS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
       - echo Running Snyk to check for vulnerabilities...
-      - snyk test
+      - snyk test || { echo "Vulnerabilities found, failing the build"; exit 1; }
 
   build:
     commands:
