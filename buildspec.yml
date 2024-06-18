@@ -14,11 +14,16 @@ phases:
       - echo Installing dependencies...
       - pip install -r requirements.txt
 
-  build:
+  pre-build:
     commands:
       - echo Serverless login.
       - export SLS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
-      - serverless login
+
+  build:
+    commands:
+      - echo Setting Serverless access key...
+      - export SERVERLESS_ACCESS_KEY=$SERVERLESS_ACCESS_KEY
+      - echo Running serverless login...
       - echo Running serverless deploy...
       - serverless deploy
 
